@@ -1,0 +1,144 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "spatial_ai"
+version = "0.1.0"
+description = "Robotics platform for cable manipulation with RL, World Models, and VLA approaches"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "Sergio" },
+]
+keywords = ["robotics", "reinforcement-learning", "imitation-learning", "simulation"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "numpy>=1.24",
+    "torch>=2.0",
+    "pyarrow>=14.0",
+    "h5py>=3.9",
+    "pandas>=2.0",
+    "rerun-sdk>=0.18",
+    "lerobot>=0.4.0",
+    "opencv-python>=4.8",
+    "imageio[ffmpeg]>=2.31",
+    "hydra-core>=1.3",
+    "omegaconf>=2.3",
+    "aiofiles>=23.0",
+    "pynput>=1.7",
+]
+
+[project.optional-dependencies]
+recording = [
+    "numpy>=1.24",
+    "torch>=2.0",
+    "pyarrow>=14.0",
+    "h5py>=3.9",
+    "pandas>=2.0",
+    "opencv-python>=4.8",
+    "imageio[ffmpeg]>=2.31",
+    "hydra-core>=1.3",
+    "omegaconf>=2.3",
+    "pynput>=1.7",
+]
+maniskill = [
+    "mani_skill>=3.0",
+    "gymnasium>=0.29",
+]
+maniskill-nightly = [
+    "mani_skill-nightly",
+    "gymnasium>=0.29",
+]
+phystwin = [
+    "warp-lang>=1.0",
+]
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.21",
+    "pytest-cov>=4.0",
+    "black>=23.0",
+    "ruff>=0.1",
+    "mypy>=1.5",
+    "pre-commit>=3.0",
+]
+all = [
+    "spatial_ai[maniskill,phystwin,dev]",
+]
+
+[project.scripts]
+record-maniskill = "spatial_ai.scripts.record_maniskill:main"
+record-phystwin = "spatial_ai.scripts.record_phystwin:main"
+convert-dataset = "spatial_ai.scripts.convert_to_lerobot:main"
+validate-dataset = "spatial_ai.scripts.validate_dataset:main"
+launch-dashboard = "spatial_ai.scripts.launch_dashboard:main"
+
+[project.urls]
+Homepage = "https://github.com/sergio/spatial_ai"
+Documentation = "https://github.com/sergio/spatial_ai#readme"
+Repository = "https://github.com/sergio/spatial_ai"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/spatial_ai"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/configs",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # Pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+]
+ignore = [
+    "E501",  # line too long (handled by formatter)
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["spatial_ai"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+asyncio_mode = "auto"
+
+[tool.coverage.run]
+source = ["src/spatial_ai"]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+]

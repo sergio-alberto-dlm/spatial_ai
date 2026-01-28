@@ -1,0 +1,46 @@
+# ManiSkill3 recording configuration for cable manipulation tasks
+
+defaults:
+  - default
+  - _self_
+
+# Environment settings
+env:
+  env_id: "PickCubeSO100-v1"  # Replace with cable task when available
+  obs_mode: "rgb+depth"
+  control_mode: "pd_joint_pos"
+  render_mode: "rgb_array"
+  sim_backend: "auto"
+  num_envs: 1
+  camera_width: 640
+  camera_height: 480
+  camera_names:
+    - "base_camera"
+    - "hand_camera"
+
+# Teleoperation settings
+teleop:
+  type: "keyboard"
+  joint_delta: 0.05
+  gripper_delta: 0.1
+  action_repeat: 1
+
+# Recording settings (override defaults)
+recording:
+  fps: 30
+  max_episode_steps: 500
+  max_episodes: 10
+  timeout_seconds: 120
+  auto_reset: true
+  save_on_interrupt: true
+  task_description: "Pick and place cube"
+  verbose: true
+
+# Output settings (override defaults)
+output:
+  format: "hdf5"
+  dir: "data/recordings/maniskill"
+  compression: "gzip"
+  compression_opts: 4
+  include_env_states: true
+  overwrite: false

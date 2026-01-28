@@ -1,0 +1,44 @@
+# Default configuration for data recording
+
+defaults:
+  - _self_
+
+# Recording settings
+recording:
+  fps: 30
+  max_episode_steps: 1000
+  timeout_seconds: 300
+
+# Synchronization settings
+sync:
+  master_sensor: "camera_rgb"
+  master_frequency_hz: 30.0
+  interpolation_method: "nearest"  # nearest, linear, cubic
+  max_latency_ms: 50.0
+  buffer_duration_s: 1.0
+
+# Validation settings
+validation:
+  enabled: true
+  rules:
+    - type: "range"
+      enabled: true
+    - type: "temporal_consistency"
+      enabled: true
+    - type: "image_quality"
+      enabled: true
+      blur_threshold: 100.0
+
+# Output settings
+output:
+  format: "lerobot"  # lerobot, hdf5
+  dir: "data/recordings"
+  chunk_size: 1000
+  video_codec: "libx264"
+  video_crf: 23
+
+# Dashboard settings
+dashboard:
+  enabled: true
+  spawn_viewer: true
+  remote_addr: null  # Set to "host:port" for remote streaming
