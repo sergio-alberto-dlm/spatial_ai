@@ -31,7 +31,7 @@ dependencies = [
     "h5py>=3.9",
     "pandas>=2.0",
     "rerun-sdk>=0.18",
-    "lerobot>=0.4.0",
+    "lerobot<0.4.0",
     "opencv-python>=4.8",
     "imageio[ffmpeg]>=2.31",
     "hydra-core>=1.3",
