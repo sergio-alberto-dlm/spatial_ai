@@ -16,7 +16,6 @@ env:
   camera_height: 480
   camera_names:
     - "base_camera"
-    - "hand_camera"
 
 # Teleoperation settings
 teleop:
